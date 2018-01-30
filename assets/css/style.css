@@ -20,7 +20,7 @@ body {
     font-weight: 300;
 }
 /*==========================================
-PRE LOADER 
+PRE LOADER
 ==========================================*/
 .preloader {
     position: fixed;
@@ -186,7 +186,7 @@ p:last-child {
     /*font-family: 'roboto', sans-serif;*/
 }
 .text {
-    color: #333333;
+    color: #ffffff;
 }
 .colorstext {
     color: #f56363;
@@ -555,7 +555,7 @@ textarea::-ms-input-placeholder
 	width:17%;
 	margin-left:20px;
 	margin-bottom:20px;
-	
+
 }
 .portfolio-details{
 	width:100%;
@@ -623,7 +623,3 @@ textarea::-ms-input-placeholder
 	text-transform:uppercase;
 	font-family:'nexa_lightregular';
 }
-
-
-
-
