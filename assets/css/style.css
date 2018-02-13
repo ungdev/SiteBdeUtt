@@ -19,35 +19,7 @@ Author URI: http://themeforest.net/user/XpeedStudio/portfolio
        font-family: 'open_sanslight';
        font-weight: 300;
    }
-   /*==========================================
-   PRE LOADER
-   ==========================================*/
-   .preloader {
-       position: fixed;
-       top: 0;
-       left: 0;
-       right: 0;
-       bottom: 0;
-       background-color: #fefefe;
-       z-index: 99999;
-       height: 100%;
-       width: 100%;
-       overflow: hidden !important;
-   }
-   
-   .loaded {
-       width: 60px;
-       height: 60px;
-       position: absolute;
-       left: 50%;
-       top: 50%;
-       background-image: url(../images/loading.gif);
-       background-repeat: no-repeat;
-       background-position: center;
-       -moz-background-size: cover;
-       background-size: cover;
-       margin: -20px 0 0 -20px;
-   }
+
    img {
        -moz-user-select: none;
        -webkit-user-select: none;
@@ -56,6 +28,7 @@ Author URI: http://themeforest.net/user/XpeedStudio/portfolio
        -webkit-user-drag: none;
        user-drag: none;
    }
+   
    a,
    a:hover,
    a:active,
@@ -298,7 +271,7 @@ Author URI: http://themeforest.net/user/XpeedStudio/portfolio
    .btn-primary:focus,
    .btn-primary.disabled,
    .btn-primary.disabled:hover {
-       color: #ffffff;
+       color: #aaaaaa;
        background-color: #f56363;
        border-color: #f56363;
    }
@@ -416,7 +389,8 @@ Author URI: http://themeforest.net/user/XpeedStudio/portfolio
        color: red;
        background-color: transparent;
    }
-     .navbar-nav {
+
+    .navbar-nav {
        text-align: center;
    }
    .navbar-toggle {
@@ -427,7 +401,7 @@ Author URI: http://themeforest.net/user/XpeedStudio/portfolio
    .navbar-default .navbar-toggle .icon-bar {
        background-color: #000;
    }
-   
+
    .menu-bg{
        background:#474747;
    }

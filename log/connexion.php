@@ -9,7 +9,7 @@ include("connexionDB.php"); // utilise la variable $conn
         echo "<p>Des champs ont étés laissé vides</p>"; // Fonctionne 
         echo "<p>Voulez-vous créer un nouveau compte ?</p>";
         echo "<a href=\"newUser.html\"><input type=\"button\" value=\"Oui\"/></a>";
-        echo "<a href=\"connexion.html\"><input type=\"button\" value=\"Non\"/></a>";
+        echo "<a href=\"location.php\"><input type=\"button\" value=\"Non\"/></a>";
         
     } else {
 
@@ -25,7 +25,7 @@ include("connexionDB.php"); // utilise la variable $conn
         if($result == 0){
             echo "<p>aucun compte n'est crée avec ce numéro étudiant, voulez vous en créer un ?</p>";
             echo "<a href=\"newUser.html\"><input type=\"button\" value=\"Oui\"/></a>";
-            echo "<a href=\"connexion.html\"><input type=\"button\" value=\"Non\"/></a>";
+            echo "<a href=\"location.php\"><input type=\"button\" value=\"Non\"/></a>";
         } else {
             $stmt = $conn->prepare("SELECT mdp FROM `user` WHERE numetu = $numetu");
             $stmt->execute();
@@ -41,7 +41,7 @@ include("connexionDB.php"); // utilise la variable $conn
                 
             } else {
                 echo "<p>mauvais mot de passe</p>";
-                echo "<a href=\"location.html\">Retour à l'accueil</a>";
+                echo "<a href=\"location.php\">Retour à l'accueil</a>";
             }
         }
     }                      
