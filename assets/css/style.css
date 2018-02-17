@@ -559,4 +559,14 @@ Author URI: http://themeforest.net/user/XpeedStudio/portfolio
        text-transform:uppercase;
        font-family:'nexa_lightregular';
    }
-   
+   /* For Log */
+   .compte{
+       color:white;
+       padding-top:1.33rem;
+       font-size: 1.1em;
+       font-weight: bold;
+   }
+   .tableau{
+       padding-top:1.33rem;
+       text-align: right;
+   }

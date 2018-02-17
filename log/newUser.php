@@ -7,7 +7,7 @@ include("connexionDB.php"); // utilisation de $conn
     if(empty($_POST["numetu"]) || empty($_POST["mdp"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"])){
        
         echo "Des champs ont étés laissé vides<br/>"; // Fonctionne  
-        echo "<a href=\"connexion.html\">retour à l'acceuil<br/></a>";
+        echo "<a href=\"location.php\">retour à l'acceuil<br/></a>";
         
     } else {
         
