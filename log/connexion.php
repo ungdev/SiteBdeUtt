@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include("user.php");
+include("connexionDB.php");
     
 if(empty($_POST["numetu"]) || empty($_POST["mdp"])){
        
@@ -15,22 +15,22 @@ if(empty($_POST["numetu"]) || empty($_POST["mdp"])){
     $numetu = $_POST["numetu"];
     $mdpPost = $_POST["mdp"];
 
-    $user = new User($numetu, $conn); // $conn foncionne
-
-    if(empty($user->getNom())){
+    $sql = "SELECT mdp FROM user WHERE numetu = $numetu";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $mdp = $row['mdp'];  
+    
+    if(empty($mdp)){
         
         echo "<p>aucun compte n'est crée avec ce numéro étudiant</p>";
         echo "<a href=\"location.php\">retour à l'accueil</a>";   
         
     } else {
 
-        if($mdpPost == $user->getMdp()){
+        if($mdpPost == $mdp){
 
-            $_SESSION["user"] = $user;
-            $_SESSION["nom"] = $user->getNom();
-            $_SESSION["numetu"] = $user->getNumetu();
-            $_SESSION["emprunt"] = $user->getEmprunt();
-            $_SESSION["prenom"] = $user->getPrenom();
+            $_SESSION["numetu"] = $numetu;
+            
             echo "<script type='text/javascript'>document.location.replace('location.php');</script>"; //redirection auto vers le menu principal si JS activé
             echo "vous êtes connectés, retour au <a href=\"location.php\">menu principal</a>";
                 

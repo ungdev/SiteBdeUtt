@@ -6,21 +6,26 @@ include("connexionDB.php"); // utilisation de $conn
 
     if(empty($_POST["nomM"])){
        
-        echo "vous n'avez pas rempli le champ<br/>"; // Fonctionne  
+        echo "vous n'avez pas rempli le champ<br/>";  
         echo "<a href=\"location.php\">retour à l'acceuil<br/></a>";
         
     } else {
         
         $nomM = $_POST["nomM"];
         
-        $sql = "SELECT ref FROM `materiel` WHERE nomM = 'tente' AND ref NOT IN (SELECT refM FROM emprunt WHERE idE IN (SELECT idE FROM enCours)) LIMIT 1";
+        $sql = "SELECT ref FROM `materiel` WHERE nomM = '$nomM' AND ref NOT IN (SELECT refM FROM emprunt WHERE idE IN (SELECT idE FROM enCours)) LIMIT 1";
         $result = $conn->query($sql);    
 
         $row = $result->fetch_assoc();
         $ref = $row['ref'];
         $numetu = $_SESSION["numetu"];
 
-        echo $ref.$numetu;
+        $sql = "SELECT `emprunt`($numetu, $ref) AS `emprunt`";
+        $result = $conn->query($sql); 
+
+        echo "<script type='text/javascript'>document.location.replace('location.php');</script>";
+        echo "<a href=\"location.php\">Emprunt effetcué, retour à l'accueil<br/></a><p>pour une 
+        reconnexion automatique, activez JavaScript sur votre naviguateur</p>";
 
     }    
 

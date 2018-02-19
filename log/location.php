@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+include("connexionDB.php");
 include("user.php");
 ?>
 <!doctype html>
@@ -71,16 +73,24 @@ include("user.php");
                     </li>
                     <li class="active"><a href="../index.html#home">Home</a></li>
 
-                    <?php // Boutton connect ou boutton disconnect
-                        if(!empty($_SESSION["user"])){
+
+
+                    <?php
+                        if(!empty($_SESSION["numetu"])){
+                            
+                            $user = new User($_SESSION["numetu"],$conn);
                             echo "<li class=\"active\"><a href=\"disconnexion.php\">Disconnect</a></li>";
-                            echo"<li class=\"compte\">".$_SESSION['prenom']." ".$_SESSION['nom']."</li>";    
+                            echo"<li class=\"compte\">".$user->getPrenom()." ".$user->getNom()."</li>";    
+                        
                         } else {
                     ?>
-                        <li class="active"><a onClick="show('formNewUser')" title="activate Js for this to work">Nouveau compte</a></li>
-                        <li class="active"><a onClick="show('connexion')">connect</a>                    
+                            <li class="active"><a onClick="show('formNewUser')" title="activate Js for this to work">Nouveau compte</a></li>
+                            <li class="active"><a onClick="show('connexion')">connect</a>                    
+                        
                     <?php } ?>      
                 </ul>
+
+
 
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -118,56 +128,52 @@ include("user.php");
                     </form>
                 </div>
 
-                <?php
-                    if(empty($_SESSION['user'])){
+            <?php
+                if(empty($_SESSION['numetu'])){
                         
                         /* message demandant de se connecter / éventuellement on peut 
                         expliquer comment fonctionne le site*/
 
-                    } else {  
-                        $user = $_SESSION['user'];
-                ?>
+                } else {  
+            ?>
                     
                     
                     
-                        <div class="container">
-                            
-                            <div class="col-md-8">
-                                <div id="empruntEnCours">
-                                    
-                                </div>
-                            </div>
-                                    
-                            <div id="emprunter">
-                                
-                            </div>			
-                        </div> <!-- /container -->
-
-
-                        <?php // selection des articles disponnibles et on 
-
+                <div class="container">
+                    
+                    <div id="emprunter">
+                        <h2>Emprunter</h2>
+                        <table class=\"tableau\">
+                    <?php 
                         
-                            $sql = "SELECT DISTINCT nomM FROM materiel WHERE ref NOT IN (SELECT refM FROM emprunt WHERE idE IN (SELECT idE FROM enCours))";
-                            $result = $conn->query($sql); // va retourner des refs
-                            
-                            echo "<table class=\"tableau\">";
+                        $sql = "SELECT DISTINCT nomM FROM materiel WHERE ref NOT IN (SELECT refM FROM emprunt WHERE idE IN (SELECT idE FROM enCours))";
+                        $result = $conn->query($sql);
 
-                            while($row = $result->fetch_assoc()) {
+                        while($row = $result->fetch_assoc()) {
+                                    
+                            echo "<tr><form method=\"post\" action=\"emprunt.php\">";
+                            $nom = $row['nomM'];
+                            echo "<td class='padding-right-20 padding-top-20'>".$nom."</td>";
+                            echo "<input type='hidden' name='nomM' value='$nom'/>";
+                            echo "<td class='padding-left-20 padding-top-20'><input type='submit' value='emprunter' title='Le pret démarre maintenant et s'arretera au moment de son retour'/></td>";      
+                            echo "</form></tr>";
                                 
-                                echo "<tr>";
-                                echo "<form method=\"post\" action=\"emprunt.php\">";
-                                $nom = $row['nomM'];
-                                echo "<td class='padding-right-20 padding-top-20'>".$nom."</td>";
-                                echo "<input type='hidden' id='nomM' value='$nom'/>";
-                                echo "<td class='padding-left-20 padding-top-20'><input type='submit' value='emprunter' title='Le pret démarre maintenant et s'arretera au moment de son retour'/></td>";      
-                                echo "</tr>";
-                            
-                            }
-                            echo "</table>";
-
-                            ?>
+                        }    
+                    }?>   
+                        </table>      
                     </div>
-                <?php }   ?>
+
+                    <div>
+                        <div id="empruntEnCours">
+                        <?php
+
+                            $user->getEmprunt();
+
+                        ?>
+                        </div>
+                    </div>		
+                
+                </div> <!-- /container -->
 
             </div>
         </div>

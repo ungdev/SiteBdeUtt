@@ -6,7 +6,7 @@ include("connexionDB.php"); // utilisation de $conn
 
     if(empty($_POST["numetu"]) || empty($_POST["mdp"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"])){
        
-        echo "Des champs ont étés laissé vides<br/>"; // Fonctionne  
+        echo "Des champs ont étés laissé vides<br/>";  
         echo "<a href=\"location.php\">retour à l'acceuil<br/></a>";
         
     } else {
@@ -17,27 +17,37 @@ include("connexionDB.php"); // utilisation de $conn
         $nom = $_POST["nom"];     
         $email = $_POST["email"]; 
 
-        $stmt = $conn->prepare("SELECT COUNT(*) FROM `user` WHERE numetu = $numetu");
-        $stmt->execute();    
+        $sql = "SELECT COUNT(*) FROM `user` WHERE numetu = $numetu";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        $num = $row['COUNT(*)'];
 
-        $result = $stmt->fetch();
-        $result = $result[0];
-
-        if($result == 0){
+        if($num == 0){
 
             echo "Nous allons lancer la creation de votre compte";
-            $stmt = $conn->prepare("INSERT INTO `user`(`numetu`, `nom`, `prenom`, `email`, `mdp`) VALUES ($numetu,'$nom','$prenom','$email','$mdp')");
-            $stmt->execute();
-
-            $_SESSION["numetu"] = $numetu;
-            echo "<p>Votre compte a bien été crée ! </p>"; 
-            echo "<script type='text/javascript'>document.location.replace('location.php');</script>"; //redirection vers le menu principal
-            echo "<p>Si la redirection automatique n'a pas fonctionnée, veuillez cliquez sur le lien ci dessous pour revenir à l'acceuil</p>";
-            echo "<p><a href=\"location.php\">Acceuil</a></p>";
+            
+            $sql = "INSERT INTO `user`(`numetu`, `nom`, `prenom`, `email`, `mdp`) VALUES ($numetu,'$nom','$prenom','$email','$mdp')";
+            
+            if($resultat = $conn->query($sql)){
+              
+                $_SESSION["numetu"] = $numetu;
+                echo "<p>Votre compte a bien été crée ! </p>"; 
+                echo "<script type='text/javascript'>document.location.replace('location.php');</script>"; //redirection vers le menu principal
+                echo "<p>Si la redirection automatique n'a pas fonctionnée, veuillez cliquez sur le lien ci dessous pour revenir à l'acceuil</p>";
+                echo "<p><a href=\"location.php\">Acceuil</a></p>";
+            
+            } else {
+            
+                echo "erreur compte non créé<br/>";
+                echo "<a href='location.php'><p>accueil</p></a>";
+            
+            }
 
         } else {
+          
             echo "Ce numéro étudiant à déjà un compte il vous est impossible d'en créer un deuxième avec la même carte";
             echo "<p><a href=\"location.php\">retour à l'acceuil</a></p>";
+        
         }
 
     }    
